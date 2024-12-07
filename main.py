@@ -3,6 +3,7 @@ from sys import exit # import module to close game
 
 # components
 from game import Game # import Game class from game.py
+from score import Score # import Score class from score.py
 
 class Main: # define main class
     def __init__(self):
@@ -15,6 +16,7 @@ class Main: # define main class
 
         # components
         self.game = Game() # create instance of game class
+        self.score = Score() # create instance of Score class
     
     def run(self): # method that runs perpetually
         while True: # main game loop
@@ -26,7 +28,9 @@ class Main: # define main class
             # display
             self.display_surface.fill(GRAY) # background color
 
+            # components
             self.game.run() # run the instance of the game class
+            self.score.run() # run the instance of the score class
             
             # updating the game
             pygame.display.update() # "updates whatever we are doing in the game so we can see things"
