@@ -1,6 +1,9 @@
 from settings import * # import pygame from settings.py
 from sys import exit # import module to close game
 
+# components
+from game import Game # import Game class from game.py
+
 class Main: # define main class
     def __init__(self):
 
@@ -9,6 +12,10 @@ class Main: # define main class
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT)) # create display surface
         self.clock = pygame.time.Clock() # create clock to work with time in Pygame
         pygame.display.set_caption('Tetris') # create window title
+
+        # components
+        self.game = Game() # create instance of game class
+    
     def run(self): # method that runs perpetually
         while True: # main game loop
             for event in pygame.event.get():
@@ -18,6 +25,8 @@ class Main: # define main class
 
             # display
             self.display_surface.fill(GRAY) # background color
+
+            self.game.run() # run the instance of the game class
             
             # updating the game
             pygame.display.update() # "updates whatever we are doing in the game so we can see things"
