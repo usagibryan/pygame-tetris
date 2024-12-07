@@ -13,4 +13,4 @@ class Game:
     def run(self):
         # blit = "block image transfer", put one surface on another surface
         # arguments are surface you want to place, and position
-        self.display_surface.blit(self.surface, (0,0))
+        self.display_surface.blit(self.surface, (PADDING,PADDING))
