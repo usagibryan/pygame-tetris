@@ -20,7 +20,7 @@ WINDOW_HEIGHT = GAME_HEIGHT + PADDING * 2
 UPDATE_START_SPEED = 800
 MOVE_WAIT_TIME = 200
 ROTATE_WAIT_TIME = 200
-BLOCK_OFFSET = pygame.Vector2(COLUMNS // 2, -1)
+BLOCK_OFFSET = pygame.Vector2(COLUMNS // 2, 5)
 
 # Colors 
 YELLOW = '#f1e60d'
@@ -33,7 +33,7 @@ ORANGE = '#f07e13'
 GRAY = '#1C1C1C'
 LINE_COLOR = '#FFFFFF'
 
-# shapes
+# shapes created using a dictionary
 TETROMINOS = {
 	'T': {'shape': [(0,0), (-1,0), (1,0), (0,-1)], 'color': PURPLE},
 	'O': {'shape': [(0,0), (0,-1), (1,0), (1,-1)], 'color': YELLOW},

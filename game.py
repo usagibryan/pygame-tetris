@@ -1,4 +1,5 @@
 from settings import *
+from random import choice
 
 class Game:
     def __init__(self):
@@ -11,12 +12,17 @@ class Game:
         # create rect for grid border
         self.rect = self.surface.get_rect(topleft = (PADDING, PADDING))
 
+        self.sprites = pygame.sprite.Group() # create group for sprites
+
         # lines
         self.line_surface = self.surface.copy() # create copy of original surface to draw lines on
         self.line_surface.fill((0,255,0)) # fill with pure green color we will never use
         self.line_surface.set_colorkey((0,255,0))
-        self.line_surface.set_alpha(120) # make lines transparent
+        self.line_surface.set_alpha(60) # lower values make lines more transparent
         # ^ to understand the logic here see: https://youtu.be/-vJg_k7XqhE?si=tplxWNfxzA_pvrSi&t=456
+
+        # tetrominos
+        self.tetromino = Tetromino(choice(list(TETROMINOS.keys())), self.sprites)
 
     def draw_grid(self):
 
@@ -38,6 +44,7 @@ class Game:
 
         # drawing
         self.surface.fill(GRAY)
+        self.sprites.draw(self.surface) # draw the sprites on the surface
 
         self.draw_grid()
 
@@ -48,3 +55,29 @@ class Game:
         
         # 5 arguments; surface, color, rect, width, corner radius
         pygame.draw.rect(self.display_surface, LINE_COLOR, self.rect, 2, 2) # draw border around grid
+
+class Tetromino:
+    def __init__(self, shape, group):
+        
+        # setup using shapes dictionary from settings.py
+        self.block_positions = TETROMINOS[shape]['shape']
+        self.color =TETROMINOS[shape]['color']
+
+        # create blocks
+        # use "list comprehension" to store in a list in an attribute (Video 4, 13 minutes in)
+        # create one instance of the block class for every position in the list
+        self.blocks = [Block(group, pos, self.color) for pos in self.block_positions]
+        
+class Block(pygame.sprite.Sprite): # create sprite
+    def __init__(self, group, pos, color): # place sprite into group
+       
+       # general
+        super().__init__(group)
+        self.image = pygame.Surface((CELL_SIZE, CELL_SIZE)) # create surface we want to display and make it one cell size
+        self.image.fill(color)
+
+        # position
+        self.pos = pygame.Vector2(pos) + BLOCK_OFFSET
+        x = self.pos.x * CELL_SIZE
+        y = self.pos.y * CELL_SIZE
+        self.rect = self.image.get_rect(topleft = (x,y)) # create rect to determine where to place it
