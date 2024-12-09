@@ -5,6 +5,7 @@ from sys import exit # import module to close game
 from game import Game # import Game class from game.py
 from score import Score # import Score class from score.py
 from preview import Preview
+from crt import CRT
 
 class Main: # define main class
     def __init__(self):
@@ -19,6 +20,7 @@ class Main: # define main class
         self.game = Game() # create instance of game class
         self.score = Score() # create instance of Score class
         self.preview = Preview()
+        self.crt = CRT(self.display_surface)
     
     def run(self): # method that runs perpetually
         while True: # main game loop
@@ -36,6 +38,7 @@ class Main: # define main class
             self.preview.run()
             
             # updating the game
+            self.crt.draw()
             pygame.display.update() # "updates whatever we are doing in the game so we can see things"
             self.clock.tick() # object that helps control framerate. Pass values to define framerate or leave blank to run as fast as possible
 

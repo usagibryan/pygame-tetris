@@ -1,7 +1,7 @@
 # see "Build Tetris with Pygame #5 - Moving the Shapes Down" @ https://youtu.be/VjvH8CwBjFA?si=ObVeyCdULD359PoA
 # this class can be used as a timer in other Pygame games?
 
-from settings import * # without this throws error due to pygame module not imported
+import pygame
 from pygame.time import get_ticks
 
 class Timer:
