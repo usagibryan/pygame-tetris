@@ -28,7 +28,8 @@ class Game:
 
         # timer
         self.timers = {
-            'vertical move': Timer(UPDATE_START_SPEED, True, self.move_down)
+            'vertical move': Timer(UPDATE_START_SPEED, True, self.move_down),
+            'horizontal move': Timer(MOVE_WAIT_TIME)
         }
         self.timers['vertical move'].activate()
 
@@ -55,9 +56,21 @@ class Game:
         # draw the new line surface onto the original game surface
         self.surface.blit(self.line_surface, (0,0))
 
+    def input(self):
+        keys = pygame.key.get_pressed()
+        # use timer to prevent moving piece too fast from user input
+        if not self.timers['horizontal move'].active: # check if timer is not active, then allow
+            if keys[pygame.K_LEFT]:
+                self.tetromino.move_horizontal(-1)
+                self.timers['horizontal move'].activate() # start timer again
+            if keys[pygame.K_RIGHT]:
+                self.tetromino.move_horizontal(1)
+                self.timers['horizontal move'].activate()
+
     def run(self):
 
         # update
+        self.input()
         self.timer_update()
         self.sprites.update()
 
@@ -87,6 +100,10 @@ class Tetromino:
         # create one instance of the block class for every position in the list
         self.blocks = [Block(group, pos, self.color) for pos in self.block_positions]
         
+    def move_horizontal(self, amount):
+        for block in self.blocks:
+            block.pos.x += amount
+
     def move_down(self):
         for block in self.blocks:
             block.pos.y += 1
