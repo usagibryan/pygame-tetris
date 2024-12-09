@@ -12,7 +12,7 @@ class Main: # define main class
 
         # general
         pygame.init()
-        self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT)) # create display surface
+        self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SCALED) # create display surface
         self.clock = pygame.time.Clock() # create clock to work with time in Pygame
         pygame.display.set_caption('Tetris') # create window title
 
@@ -28,6 +28,9 @@ class Main: # define main class
                 if event.type == pygame.QUIT: # if X button on window is clicked
                     pygame.quit() # closes pygame
                     exit() # terminates any running script
+                if event.type == pygame.KEYDOWN:
+                    if event.mod & pygame.KMOD_ALT and event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
+                        pygame.display.toggle_fullscreen()
 
             # display
             self.display_surface.fill(GRAY) # background color
